@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="gluegen-rt">
+    <CLASSES>
+      <root url="jar://C:/Program Files (x86)/Processing/core/library/gluegen-rt.jar!/" />
+      <root url="jar://C:/Program Files (x86)/Processing/core/library/gluegen-rt-natives-windows-amd64.jar!/" />
+      <root url="jar://C:/Program Files (x86)/Processing/core/library/gluegen-rt-natives-windows-i586.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
