@@ -1,15 +1,17 @@
+package visualisation
+
 /**
  * Created by Nb on 6/12/2015.
  * Main applet of the visualisation of heart rate.
  */
-
-package visualisation
 
 import processing.core.*
 import visualisation.yun.*
 
 /**
  * Main class for the visualisation of heart rate.
+ * It extends the PApplet for the Processing launcher
+ * to find it.
  */
 class HeartRateVisualisation : PApplet() {
     /**
@@ -18,6 +20,13 @@ class HeartRateVisualisation : PApplet() {
     var RASPBERRY: Int = 0
     var CRANBERRY: Int = 0
     var WHITESMOKE: Int = 0
+    var AZURE: Int = 0
+    var CLOVE: Int = 0
+
+    /**
+     * Arduino adapter.
+     */
+    // lateinit var adapter: Adapter
 
     /**
      * Fonts.
@@ -39,14 +48,17 @@ class HeartRateVisualisation : PApplet() {
      * Heart rate.
      */
     private var heartRate: HeartRate? = null
+    private var previousHeartRate: HeartRate? = null
 
     /**
      * Initialisation.
      */
     init {
+        AZURE = color(132, 177, 224)
         RASPBERRY = color(217, 106, 106)
         CRANBERRY = color(158, 67, 81)
         WHITESMOKE = color(228, 232, 235)
+        CLOVE = color(249, 142, 178)
     }
 
     /**
@@ -56,13 +68,13 @@ class HeartRateVisualisation : PApplet() {
         /**
          * Window size.
          */
-        val WIDTH = 720
-        val HEIGHT = 720
+        val WIDTH = Config.width
+        val HEIGHT = Config.height
 
         /**
          * Frame rate.
          */
-        val FRAME_RATE = 60f
+        val FRAME_RATE = Config.frameRate
 
         /**
          * Font settings.
@@ -75,30 +87,30 @@ class HeartRateVisualisation : PApplet() {
         /**
          * Timer interval, in milliseconds.
          */
-        val REQUEST_INTERVAL = 1000
+        val REQUEST_INTERVAL = Config.requestInterval
 
         /**
          * Waiting circle radius.
          */
-        val LOADING_CIRCLE_RADIUS = 175f
+        val LOADING_CIRCLE_RADIUS = Config.loadingCircleRadius
         val LOADING_CIRCLE_DIAMETER = LOADING_CIRCLE_RADIUS * 2
-        val LOADING_CIRCLE_ANGLE_PERIOD = 3 // in seconds
-        val LOADING_CIRCLE_ANGLE_STEP = PI / (FRAME_RATE * LOADING_CIRCLE_ANGLE_PERIOD)
-        val LOADING_CIRCLE_STROKE_WEIGHT = 10f
-        val LOADING_CIRCLE_GAP_RADIUS = 150f
+        val LOADING_CIRCLE_PERIOD = Config.loadingCirclePeriod // in seconds
+        val LOADING_CIRCLE_ANGLE_STEP = PI / (FRAME_RATE * LOADING_CIRCLE_PERIOD)
+        val LOADING_CIRCLE_STROKE_WEIGHT = Config.loadingCircleStrokeWeight
+        val LOADING_CIRCLE_GAP_RADIUS = Config.loadingCircleGapRadius
     }
 
     /**
      * Tell whether it is time to fire a new request.
      */
-    private val timeForNewRequest: Boolean
+    private val isTimeForNewRequest: Boolean
         get() = millis() - lastRequested > REQUEST_INTERVAL
 
     /**
      * Shortcut for processing a request if necessary.
      */
-    private fun processRequestIfNecessary(processFunction: () -> Unit) {
-        if (timeForNewRequest) {
+    private fun ifNecessaryToRequestHeartRate(processFunction: () -> Unit) {
+        if (isTimeForNewRequest) {
             processFunction.invoke()
             lastRequested = millis()
         }
@@ -107,10 +119,10 @@ class HeartRateVisualisation : PApplet() {
     /**
      * Shortcut for painting loading circle.
      */
-    private fun paintLoadingCircleIfNecessary(paintFunction: () -> Unit) {
+    private fun ifNecessaryToPaintLoadingCircle(paintFunction: () -> Unit) {
         if (heartRate?.state != HeartRateState.REPORTING_DATA) {
             paintFunction.invoke()
-            if (heartRate?.state == HeartRateState.COLLECTING_DATA || heartRate == null) {
+            if (heartRate?.state == HeartRateState.COLLECTING_DATA || heartRate?.state == HeartRateState.SENSOR_ABSENT || heartRate == null) {
                 loadingCircleAngle += LOADING_CIRCLE_ANGLE_STEP
             }
         }
@@ -119,10 +131,17 @@ class HeartRateVisualisation : PApplet() {
     /**
      * Shortcut for painting heart rate.
      */
-    private fun paintHeartRateIfNecessary(paintFunction: () -> Unit) {
+    private fun ifNecessaryToPaintHeartRate(paintFunction: () -> Unit) {
         if (heartRate?.state == HeartRateState.REPORTING_DATA) {
             paintFunction.invoke()
         }
+    }
+
+    private fun ifNecessaryToFeed(feedFunction: () -> Unit) {
+        if (previousHeartRate?.state != heartRate?.state) {
+            feedFunction.invoke()
+        }
+        previousHeartRate = heartRate
     }
 
     /**
@@ -153,13 +172,17 @@ class HeartRateVisualisation : PApplet() {
         text("${heartRate?.heartRate}", WIDTH / 2f, HEIGHT / 2.5f)
     }
 
+    /**
+     * Paint hint.
+     */
     private fun paintHint() {
         var hint = ""
         when (heartRate?.state) {
             HeartRateState.SOURCE_ABSENT -> hint = "please put the sensor on"
-            HeartRateState.COLLECTING_DATA -> hint = "collecting data"
+            HeartRateState.COLLECTING_DATA -> hint = "measuring"
             HeartRateState.REPORTING_DATA -> hint = "heart rate"
-            null -> hint = "connecting to the sensor"
+            HeartRateState.SENSOR_ABSENT -> hint = "discovering sensor"
+            null -> hint = "discovering server"
         }
         fill(WHITESMOKE)
         textFont(HINT_FONT)
@@ -191,19 +214,25 @@ class HeartRateVisualisation : PApplet() {
      */
     override fun draw() {
         background(RASPBERRY)
-        processRequestIfNecessary {
-            try {
-                heartRate = HeartRateDataSource.get_heart_rate()
-            } catch (e: DataSourceException) {
-                e.printStackTrace()
-                throw e
-            }
-        }
-        paintLoadingCircleIfNecessary {
+        ifNecessaryToPaintLoadingCircle {
             paintLoadingCircle()
         }
-        paintHeartRateIfNecessary {
+        ifNecessaryToPaintHeartRate {
             paintHeartRate()
+        }
+        ifNecessaryToRequestHeartRate {
+            HeartRateDataSource.get_heart_rate(
+                    onSuccess = { rawResponse ->
+                        heartRate = HeartRate(rawResponse)
+                    },
+                    onError = { exception ->
+                        println(exception.message)
+                        heartRate = null
+                    }
+            )
+        }
+        ifNecessaryToFeed {
+            // adapter.feed(heartRate)
         }
         paintHint()
     }

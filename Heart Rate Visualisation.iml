@@ -13,5 +13,7 @@
     <orderEntry type="library" name="com.mashape.unirest:unirest-java:1.4.7" level="project" />
     <orderEntry type="library" name="jogl-all" level="project" />
     <orderEntry type="library" name="gluegen-rt" level="project" />
+    <orderEntry type="library" name="libraries" level="project" />
+    <orderEntry type="library" name="Arduino" level="project" />
   </component>
 </module>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Configurations.</comment>
+    <entry key="width">720</entry>
+    <entry key="height">720</entry>
+    <entry key="frameRate">60</entry>
+    <entry key="requestInterval">1000</entry>
+    <entry key="loadingCircleRadius">175</entry>
+    <entry key="loadingCirclePeriod">5</entry>
+    <entry key="loadingCircleStrokeWeight">10</entry>
+    <entry key="loadingCircleGapRadius">150</entry>
+    <entry key="intermediateServerHost">127.0.0.1</entry>
+    <entry key="intermediateServerPort">7000</entry>
+</properties>

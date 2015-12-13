@@ -1,0 +1,52 @@
+<component name="libraryTable">
+  <library name="libraries">
+    <CLASSES>
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/library" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/library/windows64" />
+    </NATIVE>
+    <SOURCES>
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/dxf/examples/SimpleExport" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/dxf/src" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/I2CCompass" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/I2CDigitalAnalog" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/I2CDigitalAnalogOOP" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/Interrupt" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/LedCounter" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/SPIAnalogDigital" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/SPIAnalogDigitalOOP" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/SimpleInput" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/examples/SimpleOutput" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/io/src" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/net/examples/ChatServer" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/net/examples/HTTPClient" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/net/examples/SharedCanvasClient" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/net/examples/SharedCanvasServer" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/net/src" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/Complex3D" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/LargePage" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/ManyPDFs" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/ManyPages" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/MousePress" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/MultipleFrames" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/OneFrame" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/examples/RandomBook" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/pdf/src" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/examples/SerialCallResponse" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/examples/SerialDuplex" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/examples/SerialMultiple" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/examples/SimpleRead" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/examples/SimpleWrite" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/src" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/test/serial_latency" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/test/serial_throughput" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/svg/src" />
+      <root url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/library" />
+    </SOURCES>
+    <jarDirectory url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/library" recursive="false" />
+    <jarDirectory url="file://C:/Program Files (x86)/Processing/modes/java/libraries/serial/library" recursive="false" type="SOURCES" />
+  </library>
+</component>
